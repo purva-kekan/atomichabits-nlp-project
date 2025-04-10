@@ -57,14 +57,6 @@ Built with PyVis to show how behavioral science concepts are interconnected acro
 
 ---
 
-## 📬 Contact
- 
-📧 purvakekan03@gmail.com
-🌐 [Portfolio](https://www.datascienceportfol.io/kekanp)
-🔗 [LinkedIn](https://www.linkedin.com/in/purva-prakash-kekan/)
-
----
-
 ## 📄 License
 
 This project is for educational and non-commercial use only.  
