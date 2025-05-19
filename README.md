@@ -56,6 +56,14 @@ Built with PyVis to show how behavioral science concepts are interconnected acro
 - PyVis & NetworkX – for network graph visualizations
 
 ---
+## 🎓 About Me
+
+I'm Purva, a Data Analyst with a Master’s in Analytics from Northeastern University. I love turning complex datasets into dashboards that tell meaningful, actionable stories. I'm currently looking for full-time opportunities in data analytics or business intelligence.
+
+📫 [LinkedIn](https://www.linkedin.com/in/purva-prakash-kekan/) | [Portfolio](https://purva-kekan.github.io/portfolio/)
+
+
+---
 
 ## 📄 License
 
