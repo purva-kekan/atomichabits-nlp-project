@@ -1,6 +1,57 @@
-# 📘 Atomic Habits NLP Dashboard
+# 📘 Atomic Habits: Semantic Relationship Mapping - NLP Project
 
-An interactive dashboard that analyzes the book **_Atomic Habits_** by *James Clear* using Natural Language Processing. This project provides chapter-wise insights, sentiment scores, top keywords, and a concept relationship network that helps visualize how ideas like _habit_, _cue_, _reward_, and _identity_ are connected throughout the book.
+📧 [purvakekan3@gmail.com](mailto:purvakekan3@gmail.com)  
+
+📫 [LinkedIn – Purva Prakash Kekan](https://www.linkedin.com/in/purva-prakash-kekan/)  
+
+👩🏻‍💻 [Portfolio Website](https://purva-kekan.github.io/portfolio/)  
+
+---
+
+#### Watch Demo Video
+
+👉  [▶️ Watch Video](https://drive.google.com/file/d/1a2QDVS8DMmbg-sKjLF5rRRmO0_DrZSep/view?usp=sharing)
+
+---
+## 📈 Visual Previews
+
+### 🌥 WordCloud of All Chapters
+
+Visualizes the most important recurring terms across the entire book.
+
+<img src = "images/wordcloud.png">
+
+### 📊 Sentiment Analysis Chart
+
+Emoji-coded chart showing whether each chapter is generally positive (😊), neutral (😐), or negative (😞).
+
+<img src = "images/sentiment.png">
+
+### 🕸️ Interactive Concept Map
+
+Built with PyVis to show how behavioral science concepts are interconnected across chapters. You can explore:
+
+- Habit loops (cue → craving → response → reward)
+- Identity-based habit building
+- Role of environment and routine in behavior change
+
+<img src = "images/networkconcept.png">
+
+---
+
+## Project Overview
+
+A fun Streamlit app that digs into James Clear’s Atomic Habits using NLP.
+
+- 📖 Chapter-wise summaries + sentiment scores
+
+- 🔑 Top keywords and word clouds across the book
+
+- 🌐 Concept network showing connections between key ideas
+
+- 🎛️ Filters to explore any chapter interactively
+
+***It’s like turning a self-help book into a live, explorable data story!***
 
 ---
 
@@ -21,26 +72,6 @@ An interactive dashboard that analyzes the book **_Atomic Habits_** by *James Cl
 
 ---
 
-## 📈 Visual Previews
-
-### 🌥 WordCloud of All Chapters
-
-Visualizes the most important recurring terms across the entire book.
-
-### 📊 Sentiment Analysis Chart
-
-Emoji-coded chart showing whether each chapter is generally positive (😊), neutral (😐), or negative (😞).
-
-### 🕸️ Interactive Concept Map
-
-Built with PyVis to show how behavioral science concepts are interconnected across chapters. You can explore:
-
-- Habit loops (cue → craving → response → reward)
-- Identity-based habit building
-- Role of environment and routine in behavior change
-
----
-
 ## 🛠️ Tech Stack
 
 - **NLP & Processing**: TextBlob, Transformers, TF-IDF
@@ -56,12 +87,46 @@ Built with PyVis to show how behavioral science concepts are interconnected acro
 - PyVis & NetworkX – for network graph visualizations
 
 ---
+
+## 🚀 How to Run This Project Locally
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/purva-kekan/atomichabits-nlp-project.git
+   cd atomichabits-nlp-project
+   
+2. **Create virtual environment**
+   ```bash
+    python -m venv .venv
+   Activate the environment
+     On Windows
+   (.venv\Scripts\activate
+    On macOS/Linux
+   source .venv/bin/activate
+   
+3. **Install Dependancies**
+   ```bash
+   pip install --upgrade pip
+   pip install -r requirements.txt
+
+4. **Run the Streamlit App**
+   ```bash
+   streamlit run app.py
+---
+
 ## 🎓 About Me
 
-I'm Purva, a Data Analyst with a Master’s in Analytics from Northeastern University. I love turning complex datasets into dashboards that tell meaningful, actionable stories. I'm currently looking for full-time opportunities in data analytics or business intelligence.
+I’m a Data Analyst who loves exploring how data can tell stories about people, behaviors, and outcomes. Beyond SQL, Python, Power BI, and NLP projects, what excites me most is using technology to improve lives—whether that’s mapping public health needs, uncovering mental health patterns, or optimizing everyday decisions. I’m curious by nature, detail-oriented by training, and driven by the belief that data is not just numbers but a way to create equity, clarity, and positive change
 
-📫 [LinkedIn](https://www.linkedin.com/in/purva-prakash-kekan/) | [Portfolio](https://purva-kekan.github.io/portfolio/)
+---
 
+## 🤝 Let’s Connect  
+
+📧 [purvakekan3@gmail.com](mailto:purvakekan3@gmail.com)  
+
+📫 [LinkedIn – Purva Prakash Kekan](https://www.linkedin.com/in/purva-prakash-kekan/)  
+
+👩🏻‍💻 [Portfolio Website](https://purva-kekan.github.io/portfolio/)  
 
 ---
 
