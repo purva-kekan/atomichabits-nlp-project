@@ -4,3 +4,7 @@ pyvis
 pandas
 matplotlib
 wordcloud
+sentence-transformers
+faiss-cpu
+numpy
+nltk
