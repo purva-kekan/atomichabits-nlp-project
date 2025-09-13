@@ -6,49 +6,57 @@ import streamlit.components.v1 as components
 from matplotlib.patches import Patch
 import matplotlib.colors as mcolors
 import ast
+import json
+import os
+import faiss
+import numpy as np
+import pickle
+from sentence_transformers import SentenceTransformer
 
-# Load data
-@st.cache_data
-def load_data():
-    df = pd.read_csv("data/atomic_habits_analysis.csv")
-    df["Top Keywords"] = df["Top Keywords"].apply(lambda x: ast.literal_eval(x) if isinstance(x, str) else x)
-    return df
+# ========== Load book metadata ==========
+with open("books.json", "r") as f:
+    books = json.load(f)
+book = next((b for b in books if b["status"] == "ready"), None)
+book_id = book["id"]
+book_title = book["title"]
 
-# Set layout
-st.set_page_config(page_title="Atomic Habits NLP Dashboard", layout="wide")
-st.sidebar.title("📘 Atomic Habits NLP Dashboard")
-section = st.sidebar.radio("Navigate", ["📚 Chapter Insights", "🕸️ Concept Network", "ℹ️ About"])
+# ========== App Layout ==========
+st.set_page_config(page_title="Self-Help NLP Platform", layout="wide")
+st.sidebar.title(f"📘 NLP Explorer – {book_title}")
+section = st.sidebar.radio("Navigate", ["📚 Chapter Insights", "🔍 Semantic Search", "🕸️ Concept Network", "ℹ️ About"])
 
-df = load_data()
-
-# ========================================
-# 📚 CHAPTER INSIGHTS
-# ========================================
+# ========== 📚 CHAPTER INSIGHTS ==========
 if section == "📚 Chapter Insights":
     st.title("📚 Chapter-wise Insights")
 
-    # Chapter selector
+    df = pd.read_csv(f"data/atomic_habits_analysis.csv")
+    df["Top Keywords"] = df["Top Keywords"].apply(lambda x: ast.literal_eval(x) if isinstance(x, str) else x)
+
+
     st.sidebar.header("📖 Filter Chapter")
     chapter_selected = st.sidebar.selectbox("Choose a Chapter", df["Chapter"])
 
     row = df[df["Chapter"] == chapter_selected].iloc[0]
-
-    # Summary
     st.subheader(f"🧠 Summary - Chapter {chapter_selected}")
     with st.expander("🔎 View Full Summary"):
         st.write(row["Summary"])
 
-    # Sentiment display (colored)
-    sentiment = row["Sentiment"]
-    sent_color = "green" if sentiment > 0.1 else "orange" if sentiment > 0 else "red"
-    st.markdown(f"**Sentiment Score:** <span style='color:{sent_color}'><b>{round(sentiment, 3)}</b></span>", unsafe_allow_html=True)
+    # Show Sentiment Label for this Chapter
+    score = row["Sentiment"]  # assuming your column is named "Sentiment"
 
-    # Top Keywords
+    def get_sentiment_label(score):
+        if score > 0.1:
+            return "😊" "Positive"
+        elif score > 0.05:
+            return "😐" "Neutral"
+        else:
+            return "😞" "Negative"
+
+    st.markdown(f"**🧭 Chapter Sentiment:** {get_sentiment_label(score)}")
     st.markdown("**🔑 Top Keywords:**")
     st.write("• " + "\n• ".join(row["Top Keywords"]))
 
-    # WordCloud for entire book
-    st.subheader("🌥 WordCloud for Entire Book")
+    st.subheader("🌥 WordCloud")
     all_keywords = sum(df["Top Keywords"].tolist(), [])
     wc = WordCloud(width=1000, height=400, background_color='white').generate(" ".join(all_keywords))
     plt.figure(figsize=(12, 4))
@@ -56,13 +64,12 @@ if section == "📚 Chapter Insights":
     plt.axis('off')
     st.pyplot(plt)
 
-    # --- Overall Sentiment Chart with Emoji ---
     st.subheader("📊 Overall Sentiment per Chapter")
 
     def sentiment_emoji(score):
         if score > 0.1:
             return "😊"
-        elif score > 0:
+        elif score > 0.05:
             return "😐"
         else:
             return "😞"
@@ -75,45 +82,68 @@ if section == "📚 Chapter Insights":
     bars = ax.barh(df["Label"], df["Sentiment"], color=colors)
     ax.axvline(0, color='black', linestyle='--', linewidth=1)
     ax.set_xlabel("Sentiment Polarity", fontsize=12)
-    ax.set_ylabel("Chapter", fontsize=12)
     ax.set_title("📘 Sentiment Score by Chapter (Red ➝ Green)", fontsize=14)
-
-    sm = plt.cm.ScalarMappable(cmap='RdYlGn', norm=norm)
-    sm.set_array([])
-    cbar = plt.colorbar(sm, ax=ax, orientation="vertical")
-    cbar.set_label("Sentiment Polarity", fontsize=10)
     st.pyplot(fig)
 
-    # CSV Export
-    st.download_button("⬇️ Download Insights CSV", df.to_csv(index=False), file_name="atomic_habits_analysis.csv")
+    #st.download_button("⬇️ Download Insights CSV", df.to_csv(index=False), file_name="chapter_sentiment_summary.csv")
 
-# ========================================
-# 🕸️ CONCEPT NETWORK
-# ========================================
+# ========== 🔍 SEMANTIC SEARCH ==========
+elif section == "🔍 Semantic Search":
+    st.title("🔍 Ask the Book")
+
+    query = st.text_input("Ask something from the book:")
+    top_k = st.slider("Number of results to show", 1, 5, 3)
+    st.markdown("Higher similarity means better match to your question.")
+
+
+    if query:
+        index_path = f"embeddings/{book_id}_index.bin"
+        meta_path = f"embeddings/{book_id}_metadata.pkl"
+
+        index = faiss.read_index(index_path)
+        with open(meta_path, "rb") as f:
+            chunks = pickle.load(f)
+
+        model = SentenceTransformer("all-MiniLM-L6-v2")
+        query_vec = model.encode([query])
+        scores, indices = index.search(np.array(query_vec), k=top_k)
+
+        results = []
+
+        for i, distance in zip(indices[0], scores[0]):
+            similarity = 1/ (1 + distance)
+            results.append((similarity, chunks[i]))
+
+        results.sort(reverse=True, key=lambda x: x[0])
+
+        #display results
+        for sim, chunk in results:
+            st.write(f"**Similarity:** {sim:.2%}")
+            st.write(chunk)
+            st.markdown("---")
+        
+
+# ========== 🕸️ CONCEPT NETWORK ==========
 elif section == "🕸️ Concept Network":
-    st.title("🕸️ Concept Relationship Network")
-    st.write("Explore how core ideas like habit, cue, reward, etc. relate visually.")
-
+    st.title("🕸️ Concept Relationship Graph")
     try:
         with open("graph/atomic_habits_concept_network.html", "r", encoding="utf-8") as f:
             html = f.read()
         components.html(html, height=600, scrolling=True)
     except FileNotFoundError:
-        st.error("❌ Concept network file not found. Place it at `graph/atomic_habits_concept_network.html`.")
+        st.error("❌ Graph not found. Place the HTML file in `graph/`.")
 
-# ========================================
-# ℹ️ ABOUT
-# ========================================
+# ========== ℹ️ ABOUT ==========
 elif section == "ℹ️ About":
     st.title("ℹ️ About This Project")
     st.markdown("""
-This interactive dashboard analyzes the book *Atomic Habits* by **James Clear** using NLP:
+This app is a multi-book NLP platform for exploring self-help books using AI.
 
-- 📘 Extracted summaries of each chapter  
-- 📈 Performed sentiment analysis  
-- 🔑 Identified top keywords using TF-IDF  
-- 🕸️ Built a concept relationship network  
-- 📊 Created an overall sentiment map + wordcloud
+**Features:**
+- 📚 Chapter-wise sentiment + keywords
+- 🔍 Semantic Search using sentence embeddings + FAISS
+- 🕸️ Concept graphs to visualize key ideas
+- 🧠 Chatbot & quote audio coming soon!
 
-**Built with:** Python · Streamlit · Transformers · PyVis  
-""")
+**Built with:** Streamlit · SentenceTransformers · FAISS · PyMuPDF · PyVis  
+    """)
