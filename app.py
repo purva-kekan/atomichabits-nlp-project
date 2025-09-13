@@ -147,3 +147,4 @@ This app is a multi-book NLP platform for exploring self-help books using AI.
 
 **Built with:** Streamlit · SentenceTransformers · FAISS · PyMuPDF · PyVis  
     """)
+
