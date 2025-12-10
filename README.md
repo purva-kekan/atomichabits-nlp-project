@@ -12,7 +12,7 @@
 
 🎥 **Watch the complete project walkthrough:**
 
-[![Demo Video](https://img.shields.io/badge/▶️_Watch-Demo_Video-red?style=for-the-badge&logo=youtube)(https://drive.google.com/file/d/15sIoCB0RgNHLxV6xy71sBgYISKhz9tYa/view?usp=sharing)]
+[![Demo Video](https://img.shields.io/badge/▶️_Watch-Demo_Video-red?style=for-the-badge&logo=youtube)](https://drive.google.com/file/d/15sIoCB0RgNHLxV6xy71sBgYISKhz9tYa/view?usp=sharing)
 
 **What's in the demo:**
 - Project overview and features
