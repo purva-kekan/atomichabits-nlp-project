@@ -339,30 +339,6 @@ atomic-habits-nlp-enhanced/
 
 ---
 
-### Quick Deploy (5 minutes):
-
-1. **Push to GitHub:**
-```bash
-git init
-git add .
-git commit -m "Atomic Habits NLP Analysis"
-git remote add origin YOUR_REPO_URL
-git push -u origin main
-```
-
-2. **Deploy:**
-- Visit [share.streamlit.io](https://share.streamlit.io)
-- Sign in with GitHub
-- Click "New app"
-- Select your repository
-- Set main file: `app.py`
-- Click "Deploy"
-
-3. **Done!** App live at: `https://your-app.streamlit.app`
-
-**Cost:** FREE ✅
-
-
 ## 📚 About the Book
 
 **"Atomic Habits"** by James Clear is a #1 New York Times bestseller that provides a proven framework for improving your habits and achieving remarkable results through small, incremental changes.
