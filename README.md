@@ -14,8 +14,6 @@
 
 [![Demo Video](https://img.shields.io/badge/▶️_Watch-Demo_Video-red?style=for-the-badge&logo=youtube)](https://drive.google.com/file/d/1a2QDVS8DMmbg-sKjLF5rRRmO0_DrZSep/view)
 
-> *Replace `YOUR_GOOGLE_DRIVE_LINK_HERE` with your Google Drive video link*
-
 **What's in the demo:**
 - Project overview and features
 - Live walkthrough of all 4 tabs
