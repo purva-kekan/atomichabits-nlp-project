@@ -10,12 +10,9 @@
 
 ## 🚀 Live Demo
 
-### **Try the app now!**
+### **Check the live analysis now!**
 
-[![Live Demo](https://img.shields.io/badge/🌐_Launch-Live_Demo-success?style=for-the-badge)](YOUR_STREAMLIT_APP_LINK_HERE)
-
-> **Replace `YOUR_STREAMLIT_APP_LINK_HERE` with your actual deployed URL**  
-> Example: `https://atomic-habits-nlp-analysis.streamlit.app`
+[![Live Demo](https://img.shields.io/badge/🌐_Launch-Live_Demo-success?style=for-the-badge)](https://atomic-habits-nlp.streamlit.app/)
 
 **Interact with:**
 - 📊 Real-time interactive dashboards
